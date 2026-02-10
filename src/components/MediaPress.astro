@@ -1,0 +1,107 @@
+---
+const articles = [
+  {
+    title: "Sinusite mal tratada pode provocar danos cerebrais e levar à morte",
+    description: "No podcast Viva Mais, Viva Bem, a otorrinolaringologista Aliciane Mota explica os riscos e como evitar complicações.",
+    url: "https://sbtnews.sbt.com.br/noticia/category/256173-cuidado-sinusite-mal-tratada-por-provocar-danos-cerebrais-e-levar-a-morte",
+    source: "SBT News",
+    tag: "Sinusite"
+  },
+  {
+    title: "Consequências de noites mal dormidas: AVC, Alzheimer e Parkinson",
+    description: "Podcast Viva Mais, Viva Bem trata dos distúrbios relacionados ao sono e seus impactos na saúde.",
+    url: "https://sbtnews.sbt.com.br/noticia/brasil/250918-podcast-viva-mais-viva-bem-trata-das-consequencias-de-noites-mal-dormidas",
+    source: "SBT News",
+    tag: "Medicina do Sono"
+  }
+];
+---
+
+<section id="midia" class="py-20 md:py-32 bg-brand-navy relative overflow-hidden">
+  
+  <!-- Subtle bg texture -->
+  <div class="absolute inset-0 opacity-5">
+    <div class="absolute top-20 right-0 w-96 h-96 bg-brand-gold rounded-full blur-[150px]"></div>
+  </div>
+
+  <div class="container mx-auto px-6 relative z-10">
+    
+    <!-- Section Header -->
+    <div class="mb-12 md:mb-16 text-center md:text-left">
+      <p class="text-brand-gold font-sans text-[10px] md:text-xs tracking-[0.4em] uppercase font-medium mb-4">
+        Referência Nacional
+      </p>
+      <h2 class="font-serif text-4xl md:text-6xl text-white mb-6">
+        Na <span class="text-brand-gold italic">Mídia</span>
+      </h2>
+      <div class="h-px w-24 bg-brand-gold/50 mx-auto md:mx-0"></div>
+    </div>
+
+    <!-- Content Grid: Video + Articles -->
+    <div class="grid grid-cols-1 lg:grid-cols-5 gap-8 lg:gap-12">
+      
+      <!-- YouTube Embed (takes 3 cols) -->
+      <div class="lg:col-span-3">
+        <div class="relative rounded-2xl overflow-hidden shadow-2xl shadow-black/30 bg-black aspect-video">
+          <iframe 
+            src="https://www.youtube.com/embed/V88JjQF6IuQ" 
+            title="Dra. Aliciane Mota no Podcast SBT - Viva Mais, Viva Bem"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+            allowfullscreen
+            loading="lazy"
+            class="absolute inset-0 w-full h-full"
+          ></iframe>
+        </div>
+        <div class="mt-6 flex items-center gap-4">
+          <!-- SBT Badge -->
+          <span class="bg-white/10 backdrop-blur-sm border border-white/10 text-white font-sans text-[10px] tracking-widest uppercase px-4 py-2 rounded-full">
+            Podcast SBT
+          </span>
+          <p class="text-white/50 font-sans text-sm">Viva Mais, Viva Bem</p>
+        </div>
+      </div>
+
+      <!-- Articles (takes 2 cols) -->
+      <div class="lg:col-span-2 flex flex-col gap-6">
+        
+        <p class="text-white/60 font-sans text-sm leading-relaxed mb-2">
+          Dra. Aliciane Mota é fonte frequente em reportagens do SBT sobre saúde respiratória e medicina do sono.
+        </p>
+
+        {articles.map((article) => (
+          <a 
+            href={article.url}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="group block bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-6 md:p-8 hover:bg-white/10 hover:border-brand-gold/30 transition-all duration-500"
+          >
+            <!-- Tag -->
+            <span class="inline-block text-brand-gold font-sans text-[10px] tracking-[0.3em] uppercase font-medium mb-3">
+              {article.tag}
+            </span>
+            
+            <!-- Title -->
+            <h3 class="font-serif text-lg md:text-xl text-white leading-snug mb-3 group-hover:text-brand-gold transition-colors duration-300">
+              {article.title}
+            </h3>
+
+            <!-- Description -->
+            <p class="font-sans text-sm text-white/50 leading-relaxed mb-4">
+              {article.description}
+            </p>
+
+            <!-- Source + Arrow -->
+            <div class="flex justify-between items-center">
+              <span class="text-white/30 font-sans text-xs uppercase tracking-wider">{article.source}</span>
+              <span class="text-brand-gold opacity-0 group-hover:opacity-100 transform translate-x-0 group-hover:translate-x-1 transition-all duration-300">
+                →
+              </span>
+            </div>
+          </a>
+        ))}
+
+      </div>
+    </div>
+
+  </div>
+</section>
