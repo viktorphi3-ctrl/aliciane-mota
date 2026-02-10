@@ -49,6 +49,12 @@ const ogImage = `${siteUrl}/og-image.jpg`;
 		<!-- Theme Color -->
 		<meta name="theme-color" content="#0B162C" />
 
+		<!-- Preload LCP image -->
+		<link rel="preload" as="image" type="image/webp" href="/hero-optimized.webp" fetchpriority="high" />
+		
+		<!-- Preconnect YouTube thumbnails -->
+		<link rel="preconnect" href="https://img.youtube.com" />
+
 		<!-- Google Fonts (async, non-blocking) -->
 		<link rel="preconnect" href="https://fonts.googleapis.com">
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
