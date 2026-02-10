@@ -11,11 +11,11 @@ const links = [
 <header id="main-header" class="fixed top-0 w-full z-50 transition-all duration-500 py-5 md:py-6 border-b border-white/10">
   <div class="container mx-auto px-6 flex justify-between items-center">
     <a href="#" class="flex items-center">
-      <img src="/logo-aliciane.svg" alt="Dra. Aliciane Mota" class="h-8 md:h-10 w-auto brightness-0 invert" />
+      <img src="/logo-aliciane.svg" alt="Dra. Aliciane Mota" width="227" height="156" class="h-8 md:h-10 w-auto brightness-0 invert" />
     </a>
 
     <!-- Desktop Nav -->
-    <nav class="hidden md:flex items-center space-x-10">
+    <nav aria-label="Navegação principal" class="hidden md:flex items-center space-x-10">
       {links.map((link) => (
         <a 
           href={link.href} 
