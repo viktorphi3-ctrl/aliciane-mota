@@ -40,17 +40,33 @@ const articles = [
     <!-- Content Grid: Video + Articles -->
     <div class="grid grid-cols-1 lg:grid-cols-5 gap-8 lg:gap-12">
       
-      <!-- YouTube Embed (takes 3 cols) -->
+      <!-- YouTube Facade (loads iframe only on click) -->
       <div class="lg:col-span-3">
-        <div class="relative rounded-2xl overflow-hidden shadow-2xl shadow-black/30 bg-black aspect-video">
-          <iframe 
-            src="https://www.youtube.com/embed/V88JjQF6IuQ" 
-            title="Dra. Aliciane Mota no Podcast SBT - Viva Mais, Viva Bem"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
-            allowfullscreen
+        <div 
+          id="yt-facade" 
+          class="relative rounded-2xl overflow-hidden shadow-2xl shadow-black/30 bg-black aspect-video cursor-pointer group"
+          role="button"
+          tabindex="0"
+          aria-label="Reproduzir vídeo: Dra. Aliciane Mota no Podcast SBT"
+        >
+          <!-- Thumbnail -->
+          <img 
+            src="https://img.youtube.com/vi/V88JjQF6IuQ/maxresdefault.jpg" 
+            alt="Dra. Aliciane Mota no Podcast SBT - Viva Mais, Viva Bem"
+            class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
             loading="lazy"
-            class="absolute inset-0 w-full h-full"
-          ></iframe>
+            decoding="async"
+          />
+          <!-- Dark overlay -->
+          <div class="absolute inset-0 bg-black/30 group-hover:bg-black/20 transition-colors duration-300"></div>
+          <!-- Play button -->
+          <div class="absolute inset-0 flex items-center justify-center">
+            <div class="w-16 h-16 md:w-20 md:h-20 bg-white/90 rounded-full flex items-center justify-center shadow-xl group-hover:scale-110 transition-transform duration-300">
+              <svg class="w-6 h-6 md:w-8 md:h-8 text-brand-navy ml-1" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M8 5v14l11-7z"/>
+              </svg>
+            </div>
+          </div>
         </div>
         <div class="mt-6 flex items-center gap-4">
           <!-- SBT Badge -->
@@ -105,3 +121,28 @@ const articles = [
 
   </div>
 </section>
+
+<script>
+  const facade = document.getElementById('yt-facade');
+  
+  function loadVideo() {
+    if (!facade) return;
+    const iframe = document.createElement('iframe');
+    iframe.src = 'https://www.youtube.com/embed/V88JjQF6IuQ?autoplay=1';
+    iframe.title = 'Dra. Aliciane Mota no Podcast SBT - Viva Mais, Viva Bem';
+    iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
+    iframe.allowFullscreen = true;
+    iframe.className = 'absolute inset-0 w-full h-full';
+    facade.innerHTML = '';
+    facade.classList.remove('cursor-pointer', 'group');
+    facade.appendChild(iframe);
+  }
+
+  facade?.addEventListener('click', loadVideo);
+  facade?.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      loadVideo();
+    }
+  });
+</script>
