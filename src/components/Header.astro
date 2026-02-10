@@ -1,0 +1,168 @@
+---
+const links = [
+  { href: "#", label: "Início" },
+  { href: "#sobre", label: "Sobre" },
+  { href: "#servicos", label: "Serviços" },
+  { href: "#procedimentos", label: "Tratamentos" },
+  { href: "#depoimentos", label: "Depoimentos" },
+];
+---
+
+<header id="main-header" class="fixed top-0 w-full z-50 transition-all duration-500 py-5 md:py-6 border-b border-white/10">
+  <div class="container mx-auto px-6 flex justify-between items-center">
+    <a href="#" class="flex items-center">
+      <img src="/logo-aliciane.svg" alt="Dra. Aliciane Mota" class="h-8 md:h-10 w-auto brightness-0 invert" />
+    </a>
+
+    <!-- Desktop Nav -->
+    <nav class="hidden md:flex items-center space-x-10">
+      {links.map((link) => (
+        <a 
+          href={link.href} 
+          class="font-sans text-[11px] tracking-[0.2em] text-white/80 hover:text-brand-gold transition-colors uppercase"
+        >
+          {link.label}
+        </a>
+      ))}
+      <a 
+        href="#agendar" 
+        class="border border-white/30 px-7 py-2.5 text-[11px] uppercase tracking-[0.2em] text-white hover:bg-brand-gold hover:border-brand-gold hover:text-white transition-all duration-300"
+      >
+        Agendar
+      </a>
+    </nav>
+
+    <!-- Mobile Menu Button -->
+    <button 
+      id="mobile-menu-btn" 
+      class="md:hidden focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-gold text-white p-1 relative z-[60]"
+      aria-label="Abrir menu de navegação"
+      aria-expanded="false"
+    >
+      <!-- Hamburger Icon -->
+      <div id="hamburger-icon" class="flex flex-col gap-[5px] w-6">
+        <span class="block h-[1.5px] w-full bg-white transition-all duration-300 origin-center" id="bar-1"></span>
+        <span class="block h-[1.5px] w-full bg-white transition-all duration-300" id="bar-2"></span>
+        <span class="block h-[1.5px] w-full bg-white transition-all duration-300 origin-center" id="bar-3"></span>
+      </div>
+    </button>
+  </div>
+</header>
+
+<!-- Mobile Menu Panel -->
+<div 
+  id="mobile-menu" 
+  class="fixed inset-0 z-[55] pointer-events-none opacity-0 transition-opacity duration-500"
+  aria-hidden="true"
+>
+  <!-- Backdrop -->
+  <div class="absolute inset-0 bg-brand-navy/98 backdrop-blur-xl"></div>
+  
+  <!-- Menu Content -->
+  <nav class="relative z-10 flex flex-col items-center justify-center h-full gap-8">
+    {links.map((link, i) => (
+      <a 
+        href={link.href} 
+        class="mobile-nav-link font-serif text-3xl text-white/90 hover:text-brand-gold transition-all duration-300 translate-y-8 opacity-0"
+        style={`transition-delay: ${100 + i * 80}ms`}
+        data-mobile-link
+      >
+        {link.label}
+      </a>
+    ))}
+    
+    <div class="pt-6 translate-y-8 opacity-0 mobile-nav-link" style="transition-delay: 500ms">
+      <a 
+        href="#agendar" 
+        class="inline-block border-2 border-brand-gold px-10 py-4 text-xs uppercase tracking-[0.3em] text-brand-gold hover:bg-brand-gold hover:text-white transition-all duration-300 font-sans font-bold"
+        data-mobile-link
+      >
+        Agendar Consulta
+      </a>
+    </div>
+
+    <!-- Contact info at bottom -->
+    <div class="absolute bottom-12 text-center translate-y-8 opacity-0 mobile-nav-link" style="transition-delay: 600ms">
+      <p class="text-white/40 font-sans text-xs uppercase tracking-widest mb-2">Fale Conosco</p>
+      <a href="tel:+5561996044030" class="text-white/70 hover:text-brand-gold font-sans text-sm transition-colors">(61) 99604-4030</a>
+    </div>
+  </nav>
+</div>
+
+<script>
+  // Header scroll effect
+  const header = document.getElementById('main-header');
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 50) {
+      header?.classList.remove('py-5', 'md:py-6', 'border-white/10', 'bg-transparent');
+      header?.classList.add('py-3', 'md:py-4', 'bg-brand-navy/95', 'backdrop-blur-md', 'border-transparent', 'shadow-md');
+    } else {
+      header?.classList.add('py-5', 'md:py-6', 'border-white/10', 'bg-transparent');
+      header?.classList.remove('py-3', 'md:py-4', 'bg-brand-navy/95', 'backdrop-blur-md', 'border-transparent', 'shadow-md');
+    }
+  });
+
+  // Mobile menu toggle
+  const menuBtn = document.getElementById('mobile-menu-btn');
+  const mobileMenu = document.getElementById('mobile-menu');
+  const bar1 = document.getElementById('bar-1');
+  const bar2 = document.getElementById('bar-2');
+  const bar3 = document.getElementById('bar-3');
+  let isOpen = false;
+
+  function toggleMenu() {
+    isOpen = !isOpen;
+    
+    if (isOpen) {
+      // Open
+      mobileMenu?.classList.remove('pointer-events-none', 'opacity-0');
+      mobileMenu?.classList.add('pointer-events-auto', 'opacity-100');
+      mobileMenu?.setAttribute('aria-hidden', 'false');
+      menuBtn?.setAttribute('aria-expanded', 'true');
+      document.body.style.overflow = 'hidden';
+      
+      // Animate hamburger to X
+      bar1?.classList.add('rotate-45', 'translate-y-[7px]');
+      bar2?.classList.add('opacity-0', 'scale-x-0');
+      bar3?.classList.add('-rotate-45', '-translate-y-[7px]');
+      
+      // Animate links in
+      document.querySelectorAll('.mobile-nav-link').forEach(link => {
+        link.classList.remove('translate-y-8', 'opacity-0');
+        link.classList.add('translate-y-0', 'opacity-100');
+      });
+    } else {
+      // Close
+      mobileMenu?.classList.add('pointer-events-none', 'opacity-0');
+      mobileMenu?.classList.remove('pointer-events-auto', 'opacity-100');
+      mobileMenu?.setAttribute('aria-hidden', 'true');
+      menuBtn?.setAttribute('aria-expanded', 'false');
+      document.body.style.overflow = '';
+      
+      // Animate X back to hamburger
+      bar1?.classList.remove('rotate-45', 'translate-y-[7px]');
+      bar2?.classList.remove('opacity-0', 'scale-x-0');
+      bar3?.classList.remove('-rotate-45', '-translate-y-[7px]');
+      
+      // Reset links
+      document.querySelectorAll('.mobile-nav-link').forEach(link => {
+        link.classList.add('translate-y-8', 'opacity-0');
+        link.classList.remove('translate-y-0', 'opacity-100');
+      });
+    }
+  }
+
+  menuBtn?.addEventListener('click', toggleMenu);
+  
+  // Close menu when clicking a link
+  document.querySelectorAll('[data-mobile-link]').forEach(link => {
+    link.addEventListener('click', () => {
+      if (isOpen) toggleMenu();
+    });
+  });
+
+  // Close on Escape
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && isOpen) toggleMenu();
+  });
+</script>

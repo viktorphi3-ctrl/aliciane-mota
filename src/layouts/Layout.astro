@@ -1,0 +1,60 @@
+---
+import '../styles/global.css';
+
+interface Props {
+	title?: string;
+    description?: string;
+    bodyClass?: string;
+}
+
+const { 
+  title = "Dra. Aliciane Mota | Otorrinolaringologia e Medicina do Sono", 
+  description = "Especialista em Otorrinolaringologia e Medicina do Sono em Brasília-DF. Diagnósticos precisos, tratamentos personalizados e cirurgias minimamente invasivas. CRM-DF 22123. Agende sua consulta.",
+  bodyClass = "bg-surface-light text-text-main" 
+} = Astro.props;
+
+const siteUrl = "https://www.draalicianemota.com.br";
+const ogImage = `${siteUrl}/og-image.jpg`;
+---
+
+<!doctype html>
+<html lang="pt-BR">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<link rel="icon" type="image/svg+xml" href="/logo-aliciane.svg" />
+		<meta name="generator" content={Astro.generator} />
+		
+		<!-- SEO -->
+		<title>{title}</title>
+		<meta name="description" content={description} />
+		<meta name="robots" content="index, follow" />
+		<link rel="canonical" href={siteUrl} />
+
+		<!-- Open Graph -->
+		<meta property="og:type" content="website" />
+		<meta property="og:title" content={title} />
+		<meta property="og:description" content={description} />
+		<meta property="og:image" content={ogImage} />
+		<meta property="og:url" content={siteUrl} />
+		<meta property="og:locale" content="pt_BR" />
+		<meta property="og:site_name" content="Dra. Aliciane Mota" />
+
+		<!-- Twitter Card -->
+		<meta name="twitter:card" content="summary_large_image" />
+		<meta name="twitter:title" content={title} />
+		<meta name="twitter:description" content={description} />
+		<meta name="twitter:image" content={ogImage} />
+
+		<!-- Theme Color -->
+		<meta name="theme-color" content="#0B162C" />
+
+		<!-- Google Fonts -->
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+		<link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+	</head>
+	<body class={`${bodyClass} font-sans antialiased`}>
+		<slot />
+	</body>
+</html>

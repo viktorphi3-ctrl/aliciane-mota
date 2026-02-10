@@ -1,0 +1,145 @@
+---
+import { CloudMoon, Wind, Stethoscope, Ear } from 'lucide-react';
+
+const procedures = [
+  {
+    id: 'sono',
+    title: 'Medicina do Sono',
+    icon: CloudMoon,
+    description: 'Diagnóstico e tratamento de distúrbios que afetam sua vitalidade e saúde cardiovascular.',
+    items: [
+      'Cirurgia para ronco e apneia do sono',
+      'Tratamento de sonolência excessiva e cansaço diurno',
+      'Manejo de distúrbios associados a arritmia, obesidade e hipertensão',
+      'Avaliação de impacto na tireoide e metabolismo'
+    ]
+  },
+  {
+    id: 'nariz',
+    title: 'Nariz e Seios da Face',
+    icon: Wind,
+    description: 'Soluções para respirar melhor e viver sem desconforto crônico.',
+    items: [
+      'Cirurgias para sinusite crônica e pólipos nasais (Sinusectomia)',
+      'Correção de Desvio de Septo (Septoplastia)',
+      'Tratamento de rinite alérgica e hipertrofia de cornetos',
+      'Remoção de tumores nasais e reconstrução de vias aéreas'
+    ]
+  },
+  {
+    id: 'garganta',
+    title: 'Garganta e Voz',
+    icon: Stethoscope,
+    description: 'Cuidado especializado para laringe, faringe e distúrbios da voz.',
+    items: [
+      'Cirurgias de amígdalas e adenoides (Amigdalectomia)',
+      'Tratamento de rouquidão, laringites e lesões vocais',
+      'Microcirurgia de laringe para nódulos e pólipos',
+      'Tratamento de infecções recorrentes e halitose'
+    ]
+  },
+  {
+    id: 'ouvido',
+    title: 'Otologia',
+    icon: Ear,
+    description: 'Tratamentos para audição, equilíbrio e infecções.',
+    items: [
+      'Tratamento de otites médias e externas',
+      'Cirurgias para perfuração timpânica (Timpanoplastia)',
+      'Manejo de zumbido e perdas auditivas',
+      'Reabilitação de labirintite e distúrbios do equilíbrio'
+    ]
+  }
+];
+---
+
+<section id="procedimentos" class="py-24 bg-white relative">
+  <div class="container mx-auto px-6">
+    <div class="mb-16 text-center max-w-3xl mx-auto">
+      <h3 class="text-brand-gold font-sans text-xs tracking-[0.3em] uppercase mb-4">Áreas de Atuação</h3>
+      <h2 class="font-serif text-4xl md:text-5xl text-brand-navy leading-tight mb-6">
+        Procedimentos <span class="italic text-brand-gold/80">Especializados</span>
+      </h2>
+      <p class="text-text-main/70 font-sans text-lg font-light">
+        Avançadas técnicas cirúrgicas e clínicas para oferecer a você o melhor desfecho possível.
+      </p>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 md:gap-12">
+      <!-- Tabs Navigation (Desktop: Sidebar, Mobile: Top Scroll) -->
+      <div class="lg:col-span-4 flex lg:flex-col gap-2 overflow-x-auto pb-4 lg:pb-0 snap-x">
+        {procedures.map((proc, index) => {
+          const Icon = proc.icon;
+          return (
+            <button 
+              class={`
+                group text-left px-6 py-4 md:px-8 md:py-6 rounded-2xl transition-all duration-300 flex items-center gap-4 md:gap-6 border shrink-0 snap-start
+                ${index === 0 ? 'bg-brand-navy text-white border-brand-navy shadow-xl scale-[1.02]' : 'bg-surface-light text-brand-navy border-transparent hover:bg-white hover:border-brand-navy/10 hover:shadow-md'}
+              `}
+              onclick={`showTab('${proc.id}', this)`}
+            >
+              <Icon size={24} strokeWidth={1.5} class={index === 0 ? 'text-brand-gold' : 'text-brand-navy/50 group-hover:text-brand-navy'} />
+              <span class="font-serif text-base md:text-lg tracking-wide whitespace-nowrap">{proc.title}</span>
+            </button>
+          )
+        })}
+      </div>
+
+      <!-- Content Area -->
+      <div class="lg:col-span-8 bg-surface-light rounded-[3rem] p-10 md:p-16 relative overflow-hidden shadow-inner min-h-[500px]">
+        {procedures.map((proc, index) => (
+          <div id={proc.id} class={`tab-content transition-opacity duration-500 ${index === 0 ? 'block opacity-100' : 'hidden opacity-0'}`}>
+            <div class="mb-10">
+              <proc.icon size={64} strokeWidth={1} class="text-brand-gold mb-6" />
+              <h3 class="font-serif text-4xl text-brand-navy mb-4">{proc.title}</h3>
+              <p class="font-sans text-xl text-text-main/70 font-light max-w-2xl">{proc.description}</p>
+            </div>
+            
+            <div class="grid md:grid-cols-2 gap-y-6 gap-x-12">
+              {proc.items.map((item) => (
+                <div class="flex items-start gap-3">
+                  <div class="mt-1.5 w-1.5 h-1.5 rounded-full bg-brand-gold shrink-0"></div>
+                  <span class="text-brand-navy font-sans text-base leading-relaxed">{item}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        ))}
+        
+        <!-- Background Decor -->
+        <div class="absolute -bottom-20 -right-20 w-96 h-96 bg-brand-navy/5 rounded-full blur-3xl pointer-events-none"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script is:inline>
+  function showTab(id, btnElement) {
+    // Hide all tabs
+    document.querySelectorAll('.tab-content').forEach(el => {
+      el.classList.add('hidden', 'opacity-0');
+      el.classList.remove('block', 'opacity-100');
+    });
+
+    // Show selected tab (with slight delay for fade effect if desired, but keeping it snappy for now)
+    const selected = document.getElementById(id);
+    selected.classList.remove('hidden');
+    // Force reflow
+    void selected.offsetWidth; 
+    selected.classList.add('opacity-100');
+
+    // Update buttons
+    const buttons = btnElement.parentElement.children;
+    for (const btn of buttons) {
+      // Reset classes
+      btn.className = "group text-left px-8 py-6 rounded-2xl transition-all duration-300 flex items-center gap-6 border bg-surface-light text-brand-navy border-transparent hover:bg-white hover:border-brand-navy/10 hover:shadow-md";
+      btn.querySelector('svg').classList.add('text-brand-navy/50');
+      btn.querySelector('svg').classList.remove('text-brand-gold');
+    }
+
+    // Set active class
+    btnElement.className = "group text-left px-8 py-6 rounded-2xl transition-all duration-300 flex items-center gap-6 border bg-brand-navy text-white border-brand-navy shadow-xl scale-[1.02]";
+    btnElement.querySelector('svg').classList.remove('text-brand-navy/50');
+    btnElement.querySelector('svg').classList.add('text-brand-gold');
+  }
+</script>
