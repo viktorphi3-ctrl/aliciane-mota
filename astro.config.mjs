@@ -8,6 +8,9 @@ export default defineConfig({
   build: {
     inlineStylesheets: 'always'
   },
+  server: {
+    port: 3000
+  },
   integrations: [
     tailwind(),
     react()
