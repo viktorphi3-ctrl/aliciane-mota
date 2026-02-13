@@ -121,12 +121,17 @@ const procedures = [
       el.classList.remove('block', 'opacity-100');
     });
 
-    // Show selected tab (with slight delay for fade effect if desired, but keeping it snappy for now)
+    // Show selected tab (with optimized transition)
     const selected = document.getElementById(id);
     selected.classList.remove('hidden');
-    // Force reflow
-    void selected.offsetWidth; 
-    selected.classList.add('opacity-100');
+    
+    // Double RAF to ensure browser registers the 'hidden' removal before adding 'opacity-100'
+    // This triggers the transition without forcing a synchronous reflow
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        selected.classList.add('opacity-100');
+      });
+    });
 
     // Update buttons
     const buttons = btnElement.parentElement.children;

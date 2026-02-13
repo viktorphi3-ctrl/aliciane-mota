@@ -91,16 +91,33 @@ const links = [
 
 <script>
   // Header scroll effect
+  // Header scroll effect using IntersectionObserver to avoid forced reflows
   const header = document.getElementById('main-header');
-  window.addEventListener('scroll', () => {
-    if (window.scrollY > 50) {
+  const sentinel = document.createElement('div');
+  sentinel.id = 'header-sentinel';
+  sentinel.style.position = 'absolute';
+  sentinel.style.top = '50px';
+  sentinel.style.left = '0';
+  sentinel.style.height = '1px';
+  sentinel.style.width = '1px';
+  sentinel.style.pointerEvents = 'none';
+  sentinel.style.opacity = '0';
+  document.body.prepend(sentinel);
+
+  const observer = new IntersectionObserver((entries) => {
+    const entry = entries[0];
+    if (!entry.isIntersecting) {
+      // Scrolled past 50px
       header?.classList.remove('py-5', 'md:py-6', 'border-white/10', 'bg-transparent');
       header?.classList.add('py-3', 'md:py-4', 'bg-brand-navy/95', 'backdrop-blur-md', 'border-transparent', 'shadow-md');
     } else {
+      // At top
       header?.classList.add('py-5', 'md:py-6', 'border-white/10', 'bg-transparent');
       header?.classList.remove('py-3', 'md:py-4', 'bg-brand-navy/95', 'backdrop-blur-md', 'border-transparent', 'shadow-md');
     }
-  });
+  }, { threshold: 0 });
+
+  observer.observe(sentinel);
 
   // Mobile menu toggle
   const menuBtn = document.getElementById('mobile-menu-btn');
