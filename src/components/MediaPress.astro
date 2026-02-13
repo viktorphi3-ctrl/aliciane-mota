@@ -1,18 +1,16 @@
 ---
-const articles = [
+const videos = [
   {
-    title: "Sinusite mal tratada pode provocar danos cerebrais e levar à morte",
-    description: "No podcast Viva Mais, Viva Bem, a otorrinolaringologista Aliciane Mota explica os riscos e como evitar complicações.",
-    url: "https://sbtnews.sbt.com.br/noticia/category/256173-cuidado-sinusite-mal-tratada-por-provocar-danos-cerebrais-e-levar-a-morte",
-    source: "SBT News",
-    tag: "Sinusite"
+    id: "KhT-CxVF7BM",
+    title: "Noites mal-dormidas podem causar doenças",
   },
   {
-    title: "Consequências de noites mal dormidas: AVC, Alzheimer e Parkinson",
-    description: "Podcast Viva Mais, Viva Bem trata dos distúrbios relacionados ao sono e seus impactos na saúde.",
-    url: "https://sbtnews.sbt.com.br/noticia/brasil/250918-podcast-viva-mais-viva-bem-trata-das-consequencias-de-noites-mal-dormidas",
-    source: "SBT News",
-    tag: "Medicina do Sono"
+    id: "jDECIYND4m8",
+    title: "Doenças causadas pelo tempo seco",
+  },
+  {
+    id: "ypSeR6Yj38c",
+    title: "SONO - O QUE É PRECISO SABER PARA TER SONO DE BOA QUALIDADE?",
   }
 ];
 ---
@@ -37,114 +35,81 @@ const articles = [
       <div class="h-px w-24 bg-brand-gold/50 mx-auto md:mx-0"></div>
     </div>
 
-    <!-- Content Grid: Video + Articles -->
-    <div class="grid grid-cols-1 lg:grid-cols-5 gap-8 lg:gap-12">
+    <!-- Content Grid: Videos -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-12">
       
-      <!-- YouTube Facade (loads iframe only on click) -->
-      <div class="lg:col-span-3">
-        <div 
-          id="yt-facade" 
-          class="relative rounded-2xl overflow-hidden shadow-2xl shadow-black/30 bg-black aspect-video cursor-pointer group"
-          role="button"
-          tabindex="0"
-          aria-label="Reproduzir vídeo: Dra. Aliciane Mota no Podcast SBT"
-        >
-          <!-- Thumbnail -->
-          <img 
-            src="/youtube.webp" 
-            alt="Dra. Aliciane Mota no Podcast SBT - Viva Mais, Viva Bem"
-            width="480"
-            height="360"
-            class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
-            loading="lazy"
-            decoding="async"
-          />
-          <!-- Dark overlay -->
-          <div class="absolute inset-0 bg-black/30 group-hover:bg-black/20 transition-colors duration-300"></div>
-          <!-- Play button -->
-          <div class="absolute inset-0 flex items-center justify-center">
-            <div class="w-16 h-16 md:w-20 md:h-20 bg-white/90 rounded-full flex items-center justify-center shadow-xl group-hover:scale-110 transition-transform duration-300">
-              <svg class="w-6 h-6 md:w-8 md:h-8 text-brand-navy ml-1" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M8 5v14l11-7z"/>
-              </svg>
+      {videos.map((video) => (
+        <div class="flex flex-col gap-4">
+          <!-- YouTube Facade (loads iframe only on click) -->
+          <div 
+            class="yt-facade relative rounded-2xl overflow-hidden shadow-2xl shadow-black/30 bg-black aspect-video cursor-pointer group"
+            data-video-id={video.id}
+            data-video-title={video.title}
+            role="button"
+            tabindex="0"
+            aria-label={`Reproduzir vídeo: ${video.title}`}
+          >
+            <!-- Thumbnail -->
+            <img 
+              src={`https://img.youtube.com/vi/${video.id}/maxresdefault.jpg`}
+              alt={video.title}
+              width="480"
+              height="360"
+              class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+              loading="lazy"
+              decoding="async"
+            />
+            <!-- Dark overlay -->
+            <div class="absolute inset-0 bg-black/30 group-hover:bg-black/20 transition-colors duration-300"></div>
+            <!-- Play button -->
+            <div class="absolute inset-0 flex items-center justify-center">
+              <div class="w-16 h-16 md:w-20 md:h-20 bg-white/90 rounded-full flex items-center justify-center shadow-xl group-hover:scale-110 transition-transform duration-300">
+                <svg class="w-6 h-6 md:w-8 md:h-8 text-brand-navy ml-1" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M8 5v14l11-7z"/>
+                </svg>
+              </div>
             </div>
           </div>
+          
+          <h3 class="font-serif text-lg text-white leading-snug group-hover:text-brand-gold transition-colors duration-300">
+            {video.title}
+          </h3>
         </div>
-        <div class="mt-6 flex items-center gap-4">
-          <!-- SBT Badge -->
-          <span class="bg-white/10 backdrop-blur-sm border border-white/10 text-white font-sans text-[10px] tracking-widest uppercase px-4 py-2 rounded-full">
-            Podcast SBT
-          </span>
-          <p class="text-white/50 font-sans text-sm">Viva Mais, Viva Bem</p>
-        </div>
-      </div>
+      ))}
 
-      <!-- Articles (takes 2 cols) -->
-      <div class="lg:col-span-2 flex flex-col gap-6">
-        
-        <p class="text-white/60 font-sans text-sm leading-relaxed mb-2">
-          Dra. Aliciane Mota é fonte frequente em reportagens do SBT sobre saúde respiratória e medicina do sono.
-        </p>
-
-        {articles.map((article) => (
-          <a 
-            href={article.url}
-            target="_blank"
-            rel="noopener noreferrer"
-            class="group block bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-6 md:p-8 hover:bg-white/10 hover:border-brand-gold/30 transition-all duration-500"
-          >
-            <!-- Tag -->
-            <span class="inline-block text-brand-gold font-sans text-[10px] tracking-[0.3em] uppercase font-medium mb-3">
-              {article.tag}
-            </span>
-            
-            <!-- Title -->
-            <h3 class="font-serif text-lg md:text-xl text-white leading-snug mb-3 group-hover:text-brand-gold transition-colors duration-300">
-              {article.title}
-            </h3>
-
-            <!-- Description -->
-            <p class="font-sans text-sm text-white/50 leading-relaxed mb-4">
-              {article.description}
-            </p>
-
-            <!-- Source + Arrow -->
-            <div class="flex justify-between items-center">
-              <span class="text-white/30 font-sans text-xs uppercase tracking-wider">{article.source}</span>
-              <span class="text-brand-gold opacity-0 group-hover:opacity-100 transform translate-x-0 group-hover:translate-x-1 transition-all duration-300">
-                →
-              </span>
-            </div>
-          </a>
-        ))}
-
-      </div>
     </div>
 
   </div>
 </section>
 
 <script>
-  const facade = document.getElementById('yt-facade');
+  const facades = document.querySelectorAll('.yt-facade');
   
-  function loadVideo() {
+  function loadVideo(facade) {
     if (!facade) return;
+    const videoId = facade.getAttribute('data-video-id');
+    const videoTitle = facade.getAttribute('data-video-title');
+    
     const iframe = document.createElement('iframe');
-    iframe.src = 'https://www.youtube.com/embed/V88JjQF6IuQ?autoplay=1';
-    iframe.title = 'Dra. Aliciane Mota no Podcast SBT - Viva Mais, Viva Bem';
+    iframe.src = `https://www.youtube.com/embed/${videoId}?autoplay=1`;
+    iframe.title = videoTitle;
     iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
     iframe.allowFullscreen = true;
     iframe.className = 'absolute inset-0 w-full h-full';
+    
     facade.innerHTML = '';
     facade.classList.remove('cursor-pointer', 'group');
     facade.appendChild(iframe);
   }
 
-  facade?.addEventListener('click', loadVideo);
-  facade?.addEventListener('keydown', (e) => {
-    if (e.key === 'Enter' || e.key === ' ') {
-      e.preventDefault();
-      loadVideo();
-    }
+  facades.forEach(facade => {
+    facade.addEventListener('click', () => loadVideo(facade));
+    facade.addEventListener('keydown', (e) => {
+        // @ts-ignore
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        loadVideo(facade);
+      }
+    });
   });
 </script>
